@@ -15,7 +15,7 @@ const BtnComplete: React.FC<Props> = ({ todo, handleToggleCompletion }) => (
     }`}
     data-testid={`todo-complete-${todo.id}`}
   >
-    {todo.isComplete && <IconCheckmark />}
+    {todo.isComplete && <IconCheckmark data-testid="icon-checkmark" />}
   </button>
 );
 

@@ -29,6 +29,7 @@ describe('TodoDisplay', () => {
       </Provider>
     );
     const completeButton = screen.getByTestId('todo-complete-12345abcde');
-    expect(completeButton.textContent?.charCodeAt(0)).toBe(10003);
+    const checkmark = completeButton.querySelector('svg');
+    expect(checkmark).toBeInTheDocument();
   });
 });
