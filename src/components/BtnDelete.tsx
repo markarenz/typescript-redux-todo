@@ -1,4 +1,5 @@
 import React from 'react';
+import IconClose from './icons/IconClose';
 
 type Props = {
   id: string;
@@ -11,7 +12,7 @@ const BtnDelete: React.FC<Props> = ({ id, handleDeleteTodo }) => (
     onClick={() => handleDeleteTodo(id)}
     data-testid={`todo-delete-${id}`}
   >
-    {'\u2715'}
+    <IconClose />
   </button>
 );
 export default BtnDelete;

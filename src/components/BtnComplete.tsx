@@ -1,5 +1,6 @@
 import React from 'react';
 import { Todo } from '../type.d';
+import IconCheckmark from './icons/IconCheckmark';
 
 type Props = {
   todo: Todo;
@@ -14,7 +15,7 @@ const BtnComplete: React.FC<Props> = ({ todo, handleToggleCompletion }) => (
     }`}
     data-testid={`todo-complete-${todo.id}`}
   >
-    {todo.isComplete ? '\u2713' : ' '}
+    {todo.isComplete && <IconCheckmark data-testid="icon-checkmark" />}
   </button>
 );
 
