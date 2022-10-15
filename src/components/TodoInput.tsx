@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Event } from '../type.d';
 import { useTodoDispatch } from '../store/reduxHooks';
 import { saveTodo } from '../store/todoSlice';
+import Btn from './Btn';
 
 const TodoInput: React.FC = () => {
   const [newTodo, setNewTodo] = useState<string>('');
@@ -20,25 +21,22 @@ const TodoInput: React.FC = () => {
       handleSaveTodo();
     }
   };
+  const isSaveBtnDisabled = newTodo === '';
   return (
     <div className="w-full flex">
       <input
         data-testid="todo-input"
-        type="text"
-        autoFocus
-        name="todo"
-        onKeyDown={handleCheckEnter}
-        onChange={handleTodoChange}
         value={newTodo}
-        className="w-full rounded-md bg-transparent px-4 py-2 border-2 border-white/50 text-white outline-none focus:bg-gray-900/30 font-bold"
+        onChange={handleTodoChange}
+        onKeyDown={handleCheckEnter}
+        className="w-full rounded-md bg-transparent px-4 py-2 mr-2 md:mr-4 border-2 border-white/50 text-white outline-none focus:bg-gray-900/30 font-bold"
+        autoFocus
       />
-      <button
-        type="button"
-        onClick={handleSaveTodo}
-        className="uppercase ml-4 p-4 bg-gray-200 rounded-md text-gray-900 transition-all duration-200 font-bold hover:bg-red-500 hover:text-white active:scale-90 hover:ring-2 hover:ring-offset-2 ring-red-700"
-      >
-        Save
-      </button>
+      <Btn
+        title="Save"
+        handleClick={handleSaveTodo}
+        disabled={isSaveBtnDisabled}
+      />
     </div>
   );
 };

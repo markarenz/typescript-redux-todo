@@ -9,6 +9,22 @@ beforeEach(() => {
   store.dispatch(initState());
 });
 
+beforeAll(() => {
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: jest.fn().mockImplementation((query) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn()
+    }))
+  });
+});
+
 describe('App', () => {
   it('renders the main App component', async () => {
     render(
@@ -40,9 +56,8 @@ describe('App', () => {
     await waitFor(() =>
       expect(screen.getByTestId('todo-list')).toBeInTheDocument()
     );
-    const buttons = screen.getAllByRole('button');
-    const btnComplete = buttons[1];
-    const btnDelete = buttons[2];
+    const btnComplete = await screen.findByTestId('todo-complete-0');
+    const btnDelete = await screen.findByTestId('todo-delete-0');
     fireEvent.click(btnComplete);
     const stateAfterCompleteClick = store.getState();
     expect(stateAfterCompleteClick.todo.todos[0].isComplete).toBe(true);

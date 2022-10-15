@@ -13,10 +13,6 @@ export type TodoAction = {
   id?: string;
 };
 
-export type TodoState = {
-  todos: Todo[];
-};
-
 export type DispatchType = (args: TodoAction) => TodoAction;
 
 interface EventTarget {
@@ -26,3 +22,10 @@ interface EventTarget {
 export interface Event {
   target: EventTarget;
 }
+
+export type TodoActionById = {
+  id: string;
+  value: string;
+};
+
+export type GenericObject = { [key: string]: any };

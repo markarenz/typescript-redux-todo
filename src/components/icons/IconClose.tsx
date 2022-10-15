@@ -4,6 +4,7 @@ const IconClose = () => (
     version="1.1"
     viewBox="0 0 371.23 371.23"
     xmlSpace="preserve"
+    className="w-full h-full"
   >
     <path
       fill="#fff"
