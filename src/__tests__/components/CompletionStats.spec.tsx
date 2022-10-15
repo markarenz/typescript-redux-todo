@@ -25,6 +25,6 @@ describe('CompletionStats', () => {
       store.dispatch(saveTodo('Test Todo Title 1'));
     });
     const element = screen.getByTestId('completion-stats');
-    expect(element).toHaveTextContent('0 of 1');
+    expect(element).toHaveTextContent('0 of 3');
   });
 });

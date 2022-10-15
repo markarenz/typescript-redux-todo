@@ -4,18 +4,19 @@ import { testTodo } from '../__fixtures__/testTodo';
 
 const props = {
   todo: testTodo,
-  handleToggleCompletion: jest.fn()
+  handleToggleCompletion: jest.fn(),
+  idx: 0
 };
 
 describe('BtnComplete', () => {
   it('renders component', () => {
     render(<BtnComplete {...props} />);
-    const element = screen.getByTestId(`todo-complete-${props.todo.id}`);
+    const element = screen.getByTestId('todo-complete-0');
     expect(element).toBeInTheDocument();
   });
   it('responds to a click', () => {
     render(<BtnComplete {...props} />);
-    const element = screen.getByTestId(`todo-complete-${props.todo.id}`);
+    const element = screen.getByTestId('todo-complete-0');
     fireEvent.click(element);
     expect(props.handleToggleCompletion).toHaveBeenCalled();
   });

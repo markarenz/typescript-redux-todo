@@ -1,12 +1,13 @@
-import { Todo } from '../type.d';
 import { testTodo } from './__fixtures__/testTodo';
 import {
   getIdHash,
   cleanInputText,
-  formatDate,
   getCompletionStats,
   saveToStorage,
-  loadFromStorage
+  loadFromStorage,
+  getTagsFromTodos,
+  processDarkModeChange,
+  getInitialDarkmode
 } from '../helpers';
 
 describe('getIdHash', () => {
@@ -25,22 +26,9 @@ two lines`;
   });
 });
 
-describe('formatDate', () => {
-  it('returns a properly formatted date when a legitimate JS date is provided', () => {
-    const input = testTodo.dateCreated;
-    const result = formatDate(input);
-    expect(result).toBe('Tuesday, October 11, 2022 @11:15:21 AM');
-  });
-  it('returns nonsense when no JS date is provided', () => {
-    const input = '';
-    const result = formatDate(input);
-    expect(result.includes('NaN')).toBe(true);
-  });
-});
-
 describe('getCompletionStats', () => {
   it('returns X of Y when a todos array is provided', () => {
-    const todos: Todo[] = [{ ...testTodo }, { ...testTodo, isComplete: true }];
+    const todos = [{ ...testTodo }, { ...testTodo, isComplete: true }];
     const result = getCompletionStats(todos);
     expect(result).toBe('1 of 2');
   });
@@ -61,5 +49,56 @@ describe('loadFromStorage', () => {
   it('fires getItem', () => {
     loadFromStorage();
     expect(localStorage.getItem).toHaveBeenCalled();
+  });
+});
+
+describe('getTagsFromTodos', () => {
+  it('returns a ist of tags', () => {
+    const todos = [
+      { ...testTodo, tags: ['bar'] },
+      { ...testTodo, tags: ['foo'] },
+      { ...testTodo }
+    ];
+    const result = getTagsFromTodos(todos);
+    expect(result.length).toBe(3);
+  });
+  it('returns a sorted list of tags', () => {
+    const todos = [
+      { ...testTodo },
+      { ...testTodo, tags: ['foo'] },
+      { ...testTodo, tags: ['bar'] }
+    ];
+    const result = getTagsFromTodos(todos);
+    let isSorted = true;
+    for (let i = 0; i < result.length - 1; i += 1) {
+      if (result[i] > result[i + 1]) {
+        isSorted = false;
+      }
+    }
+    expect(isSorted).toBe(true);
+  });
+});
+
+describe('processDarkModeChange', () => {
+  it('sets the body class for darkmode', () => {
+    processDarkModeChange(true);
+    expect(localStorage.setItem).toHaveBeenCalled();
+    expect(localStorage.setItem).toHaveBeenCalledWith('todoDarkmode', 'true');
+  });
+  it('sets the body class for darkmode', () => {
+    processDarkModeChange(false);
+    expect(localStorage.setItem).toHaveBeenCalledWith('todoDarkmode', 'false');
+  });
+});
+
+describe('getInitialDarkmode', () => {
+  it('returns false when browser darkmode is disabled', () => {
+    const result = getInitialDarkmode();
+    expect(result).toBe(false);
+  });
+  it('returns true when browser darkmode is disabled', () => {
+    Storage.prototype.getItem = jest.fn(() => 'true');
+    const result = getInitialDarkmode();
+    expect(result).toBe(true);
   });
 });
