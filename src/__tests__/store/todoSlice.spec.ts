@@ -1,8 +1,16 @@
-import { todoSlice } from '../../store/todoSlice';
+import { todoSlice, TodoState } from '../../store/todoSlice';
 import { testTodo } from '../__fixtures__/testTodo';
+import {} from '../../type.d';
 
-const initialState = {
-  todos: [{ ...testTodo }, { ...testTodo, id: '1' }, { ...testTodo, id: '2' }]
+const initialState: TodoState = {
+  todos: [{ ...testTodo }, { ...testTodo, id: '1' }, { ...testTodo, id: '2' }],
+  tags: ['test'],
+  selectedTodoId: '',
+  isTagModalOpen: false,
+  isEditingTodoTitle: false,
+  isFilterModalOpen: false,
+  tagFilter: '',
+  hideCompleted: false
 };
 
 describe('todoSlice', () => {

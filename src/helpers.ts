@@ -1,4 +1,4 @@
-import { Todo } from './type.d';
+import { Todo, GenericObject } from './type.d';
 
 export const getIdHash = (): string => {
   const hl = 36;
@@ -13,24 +13,6 @@ export const getIdHash = (): string => {
 
 export const cleanInputText = (str: string): string =>
   str.trim().replace(/[\n\r]+/g, ' ');
-
-const zeroPad = (n: number): string => (n > 9 ? `${n}` : `0${n}`);
-
-export const formatDate = (date: string): string => {
-  const d = new Date(date);
-  const h24 = d.getHours();
-  const h = h24 > 12 ? zeroPad(h24 - 12) : zeroPad(h24);
-  const ampm = h24 > 11 ? 'PM' : 'AM';
-  const m = zeroPad(d.getMinutes());
-  const s = zeroPad(d.getSeconds());
-  const fd = d.toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-  return `${fd} @${h}:${m}:${s} ${ampm}`;
-};
 
 export const getCompletionStats = (todos: Todo[]): string => {
   const total = todos?.length || 0;
@@ -52,4 +34,59 @@ export const loadFromStorage = (): Todo[] => {
   } catch (e) {
     return [];
   }
+};
+
+export const saveTagFilter = (tagFilter: string) => {
+  localStorage.setItem('todoTagFilter', tagFilter);
+};
+
+export const getTagFilterDefault = () => {
+  const str = localStorage.getItem('todoTagFilter');
+  return str;
+};
+
+export const getTagsFromTodos = (todos: Todo[]): string[] => {
+  const tagsObj: GenericObject = {};
+  todos.forEach((t: Todo) => {
+    t.tags.forEach((tg: string) => {
+      tagsObj[tg] = t.tags;
+    });
+  });
+  return Object.keys(tagsObj).sort((a, b) => (a > b ? 1 : -1));
+};
+
+export const getTagsFromStorage = (): string[] | null => {
+  try {
+    const todoStr = `${localStorage.getItem('todoData')}`;
+    const todos = JSON.parse(todoStr);
+    return getTagsFromTodos(todos);
+  } catch (e) {
+    return null;
+  }
+};
+
+const setDarkModeClass = (isDarkmode: boolean): void => {
+  if (isDarkmode) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+};
+
+export const processDarkModeChange = (newDarkMode: boolean): void => {
+  setDarkModeClass(newDarkMode);
+  localStorage.setItem('todoDarkmode', JSON.stringify(newDarkMode));
+};
+
+export const getInitialDarkmode = (): boolean => {
+  const browserDarkmode = window.matchMedia(
+    '(prefers-color-scheme: dark)'
+  ).matches;
+  const str = localStorage.getItem('todoDarkmode');
+  if (str && str.length > 0) {
+    const initialDarkMode = str === 'true';
+    setDarkModeClass(initialDarkMode);
+    return initialDarkMode;
+  }
+  return browserDarkmode;
 };
