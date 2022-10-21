@@ -7,9 +7,6 @@ module.exports = {
       colors: {
         primary: '#e7702b',
         primaryDark: '#a63d00',
-
-        // bgGray700Dark: '#080d16',
-        // bgGray800Dark: '#080d16',
         gray900Dark: '#080d16'
       },
       animation: {

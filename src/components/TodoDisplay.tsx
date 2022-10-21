@@ -32,7 +32,7 @@ const TodoDisplay: React.FC<Props> = ({
   const rootClass = `w-full p-2 md:p-4 text-gray-900 rounded-lg my-2 flex items-center border-2 ${
     isSelected
       ? 'border-gray-500 dark:border-gray-800 bg-gray-500/50 dark:bg-gray-700/50'
-      : 'border-white/50 dark:border-gray-300/50 bg-gray-200/50 dark:bg-gray-500/50'
+      : 'border-white/50 dark:border-gray-300/50 bg-gray-200/50 dark:bg-gray-400/50'
   }`;
   if (isEditingTodoTitle && isSelected) {
     return (
