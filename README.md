@@ -135,9 +135,7 @@
 - And Typescript really helps keep me from getting wires crossed when my data structures evolve during development.
 - Notes for setup, etc. are in the git repo, link in the description.
 - Our app is full-featured, but there are some other things we could add, I'm sure. What would you like to see? Please let me know in the comments.
-
----
-
+=======
 # Dev Process
 
 - [x] Feature: Todos
