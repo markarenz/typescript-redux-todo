@@ -129,7 +129,7 @@ export const todoSlice = createSlice({
     setFilterModalOpen: (state, action: PayloadAction<string>) => {
       state.isFilterModalOpen = action.payload === 'open';
     },
-    sethideCompleted: (state, action: PayloadAction<string>) => {
+    setHideCompleted: (state, action: PayloadAction<string>) => {
       state.hideCompleted = action.payload === 'hide';
     },
     setTagFilter: (state, action: PayloadAction<string>) => {
@@ -157,7 +157,7 @@ export const {
   selectTodoTitleForEdit,
   setTodoTitleEditComplete,
   setFilterModalOpen,
-  sethideCompleted,
+  setHideCompleted,
   setTagFilter,
   clearAll
 } = todoSlice.actions;

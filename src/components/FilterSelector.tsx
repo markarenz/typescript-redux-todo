@@ -2,7 +2,7 @@ import Modal from './Modal';
 import { useTodoDispatch, useTodoSelector } from '../store/reduxHooks';
 import {
   setFilterModalOpen,
-  sethideCompleted,
+  setHideCompleted,
   setTagFilter,
   clearAll
 } from '../store/todoSlice';
@@ -17,7 +17,7 @@ const FilterSelector = () => {
     dispatch(setFilterModalOpen('close'));
   };
   const handleToggleHideCompleted = (): void => {
-    dispatch(sethideCompleted(hideCompleted ? 'show' : 'hide'));
+    dispatch(setHideCompleted(hideCompleted ? 'show' : 'hide'));
   };
   const handleTagFilterChange = (t: string): void => {
     dispatch(setTagFilter(t));
